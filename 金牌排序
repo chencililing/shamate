@@ -1,0 +1,49 @@
+#include<stdio.h>
+
+typedef struct country
+{
+	char name[100];
+	int gold;
+	int silver;
+	int bornze;
+	int sum; 
+}country;
+
+int main()
+{
+	country c[8];
+	FILE* infp=fopen("D:/file.txt","r");
+	if(infp==NULL)
+	{
+		printf("Error\n");
+		return 0;
+	}
+	
+	for(int i=0;i<8;i++)
+	{
+		fscanf(infp,"%s %d %d %d %d",c[i].name,&c[i].gold,&c[i].silver,&c[i].bornze,&c[i].sum);
+	}
+	fclose(infp);
+	
+	FILE *outfp=fopen("D:/file_sorted.txt","w");
+	for(int i=0;i<=7;i++)
+	{
+		for(int j=0;j<=7;j++)
+		{
+			if(c[j].gold>c[j+1].gold)
+			{
+				country t=c[j];
+				c[j]=c[j+1];
+				c[j+1]=t;
+			} 
+		} 
+	}
+	for(int i=0;i<8;i++)
+	{
+		fprintf(outfp,"%s\t%d\t%d\t%d\t%d\n",c[i].name,c[i].gold,c[i].silver,c[i].bornze,c[i].sum);
+	}
+	printf("金牌升序排列结果已经输出到file_sorted.txt中了~\n"); 
+	fclose(outfp);
+	
+	return 0; 
+}
